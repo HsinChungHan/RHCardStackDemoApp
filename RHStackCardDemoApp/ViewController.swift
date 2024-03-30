@@ -1,19 +1,125 @@
 //
 //  ViewController.swift
-//  RHStackCardDemoApp
+//  SlidingCard
 //
-//  Created by Chung Han Hsin on 2024/3/30.
+//  Created by Chung Han Hsin on 2024/3/22.
 //
 
+import RHUIComponent
+import RHStackCard
 import UIKit
 
 class ViewController: UIViewController {
-
+    let componentFactory = CardViewComponentsFactory()
+    lazy var cardDeskViewController = componentFactory.makeCardDeskViewController(with: self, in: self)
+    lazy var cardDeskView = cardDeskViewController.view!
+    lazy var cardViewControlBar = componentFactory.makeCardViewControlBar(with: self)
+    lazy var slidingEventObserver = componentFactory.makeSlidingEventObserver()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        cardDeskViewController.registerCardViewType(withCardViewID: "CustomCardView", cardViewType: CustomCardView.self)
+        setupLayout()
+        addObserver(with: slidingEventObserver)
+        bindEvent()
     }
-
-
+    
+    func addObserver(with slidingEventObserver: SlidingEventObserver) {
+        ObservableSlidingAnimation.shared.addObserver(slidingEventObserver)
+    }
+    
+    func bindEvent() {
+        slidingEventObserver.didUpdateValue = { [weak self] event in
+            guard let self else { return }
+            self.cardViewControlBar.handleSlideBehaviorLabelAlpha(with: event)
+        }
+    }
 }
+
+// MARK: - Layout
+extension ViewController {
+    fileprivate func setupLayout() {
+        print(UIScreen.main.bounds.width)
+        view.addSubview(cardDeskView)
+        cardDeskView.constraint(top: view.safeAreaLayoutGuide.snp.top, bottom: view.safeAreaLayoutGuide.snp.bottom, leading: view.snp.leading, trailing: view.snp.trailing, padding: .init(top: 0, left: 8, bottom: 0, right: 8))
+        
+        view.addSubview(cardViewControlBar)
+        cardViewControlBar.constraint(bottom: cardDeskView.snp.bottom, centerX: view.snp.centerX, padding: .init(top: 0, left: 0, bottom: 16, right: 0))
+    }
+}
+
+// MARK - Mock data
+extension ViewController {
+    func randomName() -> String {
+        let names = ["Alice", "Bob", "Charlie", "Daisy", "Ethan", "Fiona", "George", "Hannah", "Ian", "Jasmine", "Kyle", "Lily", "Max", "Nina", "Oscar", "Piper", "Quinn", "Ruby", "Steven", "Tina", "Ulysses", "Violet", "Walter", "Xena", "Yves", "Zoe"]
+        return names.randomElement()!
+    }
+    
+    func makeImageNameCards() -> [CustomCard] {
+        let cardUIDs = Array(100...120) // 假設這些是你的UID範圍
+         var cards: [CustomCard] = []
+         
+         for (index, uid) in cardUIDs.enumerated() {
+             let start = 1 + index * 8 // 計算每個卡片imageNames的起始值
+             let end = start + 7 // 計算結束值
+             let imageNames = (start...end).map { "\($0)" }
+             let cardName = randomName() // 獲取一個隨機名字
+             
+             let card = CustomCard(uid: "\(uid)", imageNames: imageNames, cardViewTypeName: "CustomCardView", cardName: cardName)
+             cards.append(card)
+         }
+         
+         return cards
+     
+    }
+    
+    func makeImageURLCards() -> [BasicCard] {
+        let urls = [
+            "https://img.onl/secZNX",
+            "https://img.onl/ZH5sWF", "https://img.onl/svq3BT", "https://img.onl/iZFN8N", "https://img.onl/0wemvT", "https://img.onl/7XELcY", "https://img.onl/CPKg1e", "https://img.onl/1KYoX8", "https://img.onl/qR1lFr", "https://img.onl/4DuU5A", "https://img.onl/buCSyk", "https://img.onl/YtXgXr", "https://img.onl/XlhMSt", "https://img.onl/eJGtug", "https://img.onl/QNenY", "https://img.onl/aXiaX6", "https://img.onl/W4O0AZ", "https://img.onl/bMQeW1", "https://img.onl/kQrXul", "https://img.onl/L2ye3l", "https://img.onl/lOPDrl", "https://img.onl/k3CYUk", "https://img.onl/cSg1E", "https://img.onl/VWokW8", "https://img.onl/6hnbsJ", "https://img.onl/f9wrd0", "https://img.onl/TeDDKj", "https://img.onl/WBDw8R", "https://img.onl/GgAxcz", "https://img.onl/B0REiI", "https://img.onl/4sduLt", "https://img.onl/tQgXqX", "https://img.onl/HvDsN", "https://img.onl/Bc37tQ", "https://img.onl/sBy1Wv", "https://img.onl/6r5VEn", "https://img.onl/f7Q15i", "https://img.onl/STASrM", "https://img.onl/Zi0bBW", "https://img.onl/MXAq0O", "https://img.onl/SrJPxh", "https://img.onl/Skrcil", "https://img.onl/hUHz2H", "https://img.onl/tiaccS", "https://img.onl/gSgl2i", "https://img.onl/RkdhZs", "https://img.onl/Z2w84", "https://img.onl/eMqUlI", "https://img.onl/HBuRMB", "https://img.onl/5Uj6Hr", "https://img.onl/7BoR", "https://img.onl/LbSOg7", "https://img.onl/GOSUqx", "https://img.onl/zQsW2u", "https://img.onl/UOF8C8", "https://img.onl/oqdqWE", "https://img.onl/1b015H", "https://img.onl/530DGM", "https://img.onl/lVtiDx", "https://img.onl/zaVBcu", "https://img.onl/RMrMwY", "https://img.onl/Ih8RYX", "https://img.onl/r5HVBG", "https://img.onl/VLnbS7", "https://img.onl/vtVK60", "https://img.onl/wwCO3L", "https://img.onl/eksZyu", "https://img.onl/tNWP0", "https://img.onl/bLTSQ", "https://img.onl/stUTZP", "https://img.onl/yfbSC0", "https://img.onl/j028gc", "https://img.onl/TDAtZW", "https://img.onl/Zck8OG", "https://img.onl/Nm5yu7", "https://img.onl/kgBC9H", "https://img.onl/DS817d", "https://img.onl/IQ8AoJ", "https://img.onl/rPzcr9", "https://img.onl/DjSyn4", "https://img.onl/hc8Afr", "https://img.onl/ysJsp9", "https://img.onl/yTEHRZ", "https://img.onl/hHI6EL", "https://img.onl/yDZgLA", "https://img.onl/SmsC19"
+        ]
+        
+        var cards: [BasicCard] = []
+        
+        for i in stride(from: 0, to: urls.count, by: 3) {
+            let cardURLs = urls[i..<min(i+3, urls.count)].compactMap { URL(string: $0) }
+            let card = BasicCard(uid: "\(i/3)", imageURLs: cardURLs)
+            cards.append(card)
+        }
+        
+        return cards
+    }
+}
+
+extension ViewController: CardDeskViewControllerDataSource {
+    var domainURL: URL? {
+        .init(string: "https://img.onl/")
+    }
+    
+    var cards: [Card] {
+        let imageNameCards = makeImageNameCards()
+        let imageURLCards = makeImageURLCards()
+        return (imageNameCards + imageURLCards).shuffled()
+    }
+}
+
+// MARK: - SwipedCardControlBarDelegate
+extension ViewController: CardViewControlBarDelegate {
+    func cardViewControlBar(_ cardViewControlBar: CardViewControlBar, slideAction: CardViewAction) {
+        let action = { [weak self] in
+            guard let self else { return }
+            let cardViewDirection = slideAction.cardViewDirection
+            if cardViewDirection == .backToIdentity {
+                let newCards = cards
+                cardDeskViewController.doAppendNewCardsTask(with: newCards)
+                return
+            }
+            cardDeskViewController.doSwipeCardViewTask(with: cardViewDirection)
+        }
+        cardDeskViewController.slideTopCardView(with: action)
+    }
+}
+
+
+
 
