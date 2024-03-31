@@ -17,6 +17,7 @@
 		D109F0ED2BB86BD1000DC8C6 /* RHStackCardDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D109F0EC2BB86BD1000DC8C6 /* RHStackCardDemoAppUITests.swift */; };
 		D109F0EF2BB86BD1000DC8C6 /* RHStackCardDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D109F0EE2BB86BD1000DC8C6 /* RHStackCardDemoAppUITestsLaunchTests.swift */; };
 		D109F0FD2BB86BEC000DC8C6 /* RHStackCard in Frameworks */ = {isa = PBXBuildFile; productRef = D109F0FC2BB86BEC000DC8C6 /* RHStackCard */; };
+		D1B7C6562BB981F40013BC87 /* ADCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B7C6552BB981F40013BC87 /* ADCardView.swift */; };
 		D1D09A3C2BB86CC6002DE3EA /* CustomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D09A3B2BB86CC6002DE3EA /* CustomCard.swift */; };
 		D1D09A3E2BB86CD6002DE3EA /* CustomCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D09A3D2BB86CD6002DE3EA /* CustomCardView.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		D109F0E82BB86BD1000DC8C6 /* RHStackCardDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RHStackCardDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D109F0EC2BB86BD1000DC8C6 /* RHStackCardDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHStackCardDemoAppUITests.swift; sourceTree = "<group>"; };
 		D109F0EE2BB86BD1000DC8C6 /* RHStackCardDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RHStackCardDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D1B7C6552BB981F40013BC87 /* ADCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADCardView.swift; sourceTree = "<group>"; };
 		D1D09A3B2BB86CC6002DE3EA /* CustomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCard.swift; sourceTree = "<group>"; };
 		D1D09A3D2BB86CD6002DE3EA /* CustomCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 				D109F0CF2BB86BD0000DC8C6 /* ViewController.swift */,
 				D1D09A3B2BB86CC6002DE3EA /* CustomCard.swift */,
 				D1D09A3D2BB86CD6002DE3EA /* CustomCardView.swift */,
+				D1B7C6552BB981F40013BC87 /* ADCardView.swift */,
 				D109F0D12BB86BD0000DC8C6 /* Main.storyboard */,
 				D109F0D42BB86BD1000DC8C6 /* Assets.xcassets */,
 				D109F0D62BB86BD1000DC8C6 /* LaunchScreen.storyboard */,
@@ -275,6 +278,7 @@
 				D1D09A3C2BB86CC6002DE3EA /* CustomCard.swift in Sources */,
 				D109F0D02BB86BD0000DC8C6 /* ViewController.swift in Sources */,
 				D1D09A3E2BB86CD6002DE3EA /* CustomCardView.swift in Sources */,
+				D1B7C6562BB981F40013BC87 /* ADCardView.swift in Sources */,
 				D109F0CC2BB86BD0000DC8C6 /* AppDelegate.swift in Sources */,
 				D109F0CE2BB86BD0000DC8C6 /* SceneDelegate.swift in Sources */,
 			);

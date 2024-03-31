@@ -19,8 +19,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        cardDeskViewController.registerCardViewType(withCardViewID: "CustomCardView", cardViewType: CustomCardView.self)
+        registerCardView()
         setupLayout()
+        
         addObserver(with: slidingEventObserver)
         bindEvent()
     }
@@ -31,6 +32,11 @@ class ViewController: UIViewController {
     
     func bindEvent() {
         slidingEventObserver.didUpdateValue = { event in }
+    }
+    
+    func registerCardView() {
+        cardDeskViewController.registerCardViewType(withCardViewID: "CustomCardView", cardViewType: CustomCardView.self)
+        cardDeskViewController.registerCardViewType(withCardViewID: "AdCardView", cardViewType: ADCardView.self)
     }
 }
 
@@ -110,6 +116,26 @@ extension ViewController {
         
         return cards
     }
+    
+    func makeADCards() -> [CustomCard] {
+        var cards: [CustomCard] = []
+        let totalImages = 17 // 總共有17張圖片
+
+        for start in stride(from: 1, through: totalImages, by: 2) {
+            let end = min(start + 1, totalImages)
+            let imageNames = [start, end].map { "ad\($0)" }
+            let cardName = "AD - Vougueee"
+            
+            // 將這一組的第一張圖片名稱作為 uid
+            let uid = "ad\(start)"
+            
+            let card = CustomCard(uid: uid, imageNames: imageNames, cardViewTypeName: "AdCardView", cardName: cardName)
+            cards.append(card)
+        }
+        
+        return cards
+    }
+
 }
 
 // MARK: - CardDeskViewControllerDataSource
@@ -121,7 +147,8 @@ extension ViewController: CardDeskViewControllerDataSource {
     var cards: [Card] {
         let imageNameCards = makeImageNameCards()
         let imageURLCards = makeImageURLCards()
-        return (imageNameCards + imageURLCards).shuffled()
+        let adCards = makeADCards()
+        return (imageNameCards + imageURLCards + adCards).shuffled()
 //        return imageURLCards
     }
 }
