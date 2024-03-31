@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     lazy var cardDeskViewController = componentFactory.makeCardDeskViewController(with: self, in: self)
     lazy var cardDeskView = cardDeskViewController.view!
     lazy var slidingEventObserver = componentFactory.makeSlidingEventObserver()
+    lazy var testTaskManagerButton = makeTestTaskManagerButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +37,31 @@ class ViewController: UIViewController {
 // MARK: - Layout
 extension ViewController {
     fileprivate func setupLayout() {
-        print(UIScreen.main.bounds.width)
+        view.addSubview(testTaskManagerButton)
+        testTaskManagerButton.constraint(bottom: view.safeAreaLayoutGuide.snp.bottom, leading: view.snp.leading, trailing: view.snp.trailing, padding: .init(top: 0, left: 16, bottom: 16, right: 16), size: .init(width: 0, height: 44))
+//
         view.addSubview(cardDeskView)
-        cardDeskView.constraint(top: view.safeAreaLayoutGuide.snp.top, bottom: view.safeAreaLayoutGuide.snp.bottom, leading: view.snp.leading, trailing: view.snp.trailing, padding: .init(top: 0, left: 8, bottom: 0, right: 8))
+        cardDeskView.constraint(top: view.safeAreaLayoutGuide.snp.top, bottom: view.safeAreaLayoutGuide.snp.bottom, leading: view.snp.leading, trailing: view.snp.trailing, padding: .init(top: 16, left: 16, bottom: 80, right: 16))
         
+        
+    }
+}
+
+// MARK - Factory Mthods
+extension ViewController {
+    func makeTestTaskManagerButton() -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle("Test Task Manager Wuth Random Action", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
+        button.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(didTapTestTaskManagerButton), for: .touchUpInside)
+        return button
+    }
+    
+    @objc func didTapTestTaskManagerButton() {
+        let actions: [CardViewAction] = [.like, .superLike, .nope]
+        cardDeskViewController.testTaskManager(slideAction: actions.randomElement()!)
     }
 }
 
