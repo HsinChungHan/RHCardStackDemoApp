@@ -24,6 +24,7 @@ class ADCardView: CardView {
         label.text = _card.cardName
         label.textColor = .white
         label.font = .boldSystemFont(ofSize: 40)
+        label.numberOfLines = 0
         return label
     }()
         
@@ -32,7 +33,7 @@ class ADCardView: CardView {
         uidLabel.removeFromSuperview()
         
         addSubview(nameLabel)
-        nameLabel.constraint(bottom: snp.bottom, centerX: snp.centerX, padding: .init(top: 0, left: 16, bottom: cardViewControlBarSafeAreaInset + 8, right: 0))
+        nameLabel.constraint(bottom: snp.bottom, centerX: snp.centerX, padding: .init(top: 0, left: 16, bottom: cardViewControlBarSafeAreaInset + 8, right: 16))
     }
 }
 
